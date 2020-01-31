@@ -1,0 +1,158 @@
+//~~tv:20010.20140827
+//~~tc: Tealium Custom Container
+
+/*
+  Tealium Custom Container Notes:
+  - Add sending code between "Start Tag Sending Code" and "End Tag Sending Code".
+  - Add JavaScript tag library code between "Start Tag Library Code" and "End Tag Library Code".
+  - Add JavaScript code only, do not add HTML code in this file.
+  - Remove any <script> and </script> tags from the code you place in this file.
+
+  Loading external JavaScript files (Loader):
+  - If you need to load an additional external JavaScript file, un-comment the singe-line JavaScript comments ("//") within the following Loader sections near the bottom of this file:
+      - "Start Loader Function Call"
+      - "End Loader Function Call"
+      - "Start Loader Callback Function"
+      - "End Loader Callback Function"
+  - After un-commenting, insert the path to the external JavaScript file you want to load.
+  - Finally, within the Loader callback function, insert the JavaScript code that should run after the external JavaScript file has loaded.
+*/
+
+/* Start Tag Library Code */
+	//****************** Define your parameter values here. ************************
+/* End Tag Library Code */
+
+//tealium universal tag - utag.sender.custom_container ut4.0.201801250533, Copyright 2018 Tealium.com Inc. All Rights Reserved.
+try {
+  (function (id, loader) {
+    var u = {};
+    utag.o[loader].sender[id] = u;
+
+    // Start Tealium loader 4.32
+    // Please do not modify
+    if (utag === undefined) { utag = {}; } if (utag.ut === undefined) { utag.ut = {}; } if (utag.ut.loader === undefined) { u.loader = function (o) { var a, b, c, l; a = document; if (o.type === "iframe") { b = a.createElement("iframe"); b.setAttribute("height", "1"); b.setAttribute("width", "1"); b.setAttribute("style", "display:none"); b.setAttribute("src", o.src); } else if (o.type === "img") { utag.DB("Attach img: " + o.src); b = new Image(); b.src = o.src; return; } else { b = a.createElement("script"); b.language = "javascript"; b.type = "text/javascript"; b.async = 1; b.charset = "utf-8"; b.src = o.src; } if (o.id) { b.id = o.id; } if (typeof o.cb === "function") { if (b.addEventListener) { b.addEventListener("load", function () { o.cb(); }, false); } else { b.onreadystatechange = function () { if (this.readyState === "complete" || this.readyState === "loaded") { this.onreadystatechange = null; o.cb(); } }; } } l = o.loc || "head"; c = a.getElementsByTagName(l)[0]; if (c) { utag.DB("Attach to " + l + ": " + o.src); if (l === "script") { c.parentNode.insertBefore(b, c); } else { c.appendChild(b); } } }; } else { u.loader = utag.ut.loader; }
+    // End Tealium loader
+
+    u.ev = {'view' : 1};
+
+    u.initialized = false;
+
+      u.map={"page_virtual_name":"contentId"};
+  u.extend=[function(a,b){ try{ if(1){try{b['page_virtual_name']=b.domain + b.platform + b.app + b.product + b.page_name}catch(e){};b['conversionTargetLead']='Lead';b['conversionTargetSale']='Sale';try{b['Id_Cotizacion_Num']=b.num_id_cotizacion}catch(e){};try{b['Id_Poliza_Num']=b.num_poliza}catch(e){};b['conversionTargetC2C']='C2C';try{b['TotalPrice']=b.prc1}catch(e){};b['page_name_c2c']='/lda/escritorio/paginas-comunes/confirmacion-click-2-call';b['page_name_c2c_cotizador']='/lda/escritorio/tarificador/confirmacion-click-2-call';try{b['product']=(new String (b.product)).substring (1)}catch(e){};b['precioC2C']='0';try{b['codCotMascara']=b.codCotMascara}catch(e){};try{b['precioMascara']=b.precioMascara}catch(e){}} } catch(e){ utag.DB(e) }  }];
+
+
+    u.send = function(a, b) {
+      if (u.ev[a] || u.ev.all !== undefined) {
+        //##UTENABLEDEBUG##utag.DB("send:##UTID##");
+
+        var c, d, e, f, i;
+
+        u.data = {
+          /* Initialize default tag parameter values here */
+          /* Examples: */
+          /* "account_id" : "1234567" */
+          /* "base_url" : "//insert.your.javascript.library.url.here.js" */
+          /* A value mapped to "account_id" or "base_url" in TiQ will replace these default values. */
+          "base_url" : "//4711.lineadirecta.com/scripts/acfp.js",
+          "kvp_delim" : "=",
+          "qsp_delim" : "&"
+        };
+
+
+        /* Start Tag-Scoped Extensions Code */
+        /* Please Do Not Edit This Section */
+        for(c=0;c<u.extend.length;c++){try{d=u.extend[c](a,b);if(d==false)return}catch(e){}};
+        /* End Tag-Scoped Extensions Code */
+
+
+        /* Start Mapping Code */
+        for (d in utag.loader.GV(u.map)) {
+          if (b[d] !== undefined && b[d] !== "") {
+            e = u.map[d].split(",");
+            for (f = 0; f < e.length; f++) {
+              u.data[e[f]] = b[d];
+            }
+          }
+        }
+        /* End Mapping Code */
+	var adclearPITag = {
+		//	general parameters
+		advertiserId : 'A3118907'	// REQUIRED: Please do not change. Global parameter, ID of the advertiser, provided by AdClear.
+		,trackDomain : '4711.vivaz.com'	// REQUIRED: Please do not change. Global parameter, tracking domain, provided by AdClear.
+		,doACF : true	// REQUIRED: Please do not change, unless you want to disable fingerprinting.
+		,doCKM : false	// REQUIRED: Please do not change, unless you want to enable cookie matching.
+
+		//	content/site parameters
+		,contentId : u.data.contentId	||''			// REQUIRED: unique identifier of the shop page
+		,mediaTarget:	u.data.mediaTarget ||'' 				// OPTIONAL: redirect to another URL. Default: leave empty  
+		,oref:	u.data.oref ||'' 			// OPTIONAL: original referrer. Default: leave empty
+		,cref:	u.data.cref ||'' 			// OPTIONAL: page referrer. Default: leave empty
+	  
+		//	overwrite click-in URL parameters
+		,mkwid : u.data.mkwid ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,pcrid : u.data.pcrid ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,kword : u.data.kword ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,match : u.data.match ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,plid : u.data.plid ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,utm_source : u.data.utm_source || ''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,utm_medium : u.data.utm_medium ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,utm_term : u.data.utm_term ||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,utm_content : u.data.utm_content||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,utm_campaign : u.data.utm_campaign||''				// OPTIONAL: unique ad identifier. Default: leave empty
+		,wtEverId : u.data.wtEverId||''					// OPTIONAL. Only for Webtrekk customers
+		,wtRequestId : u.data.wtRequestId||''				// OPTIONAL. Only for Webtrekk customers
+		,passThrough : u.data.passThrough||''				// OPTIONAL: URL encoded string for transmission of individual URL parameters		*/
+	};
+
+
+        /* Start Tag Sending Code */
+
+var ACTRP_CT=function(){this.prt=location.protocol.toLowerCase()=="https:"?"https:":"http:";this.tst=function(){var e=new Date;var t=e.getTime();return t};this.enc=function(e){if(e){if(typeof encodeURIComponent=="function"){return encodeURIComponent(e)}return escape(e)}};this.img=function(e){if(document.images){if(typeof t!="object"){var t=new Array}var n=t.length;t[n]=new Image;t[n].src=e;t[n].width=1;t[n].height=1;t[n].border=0;t[n].onload=function(){}}else{var r=document.getElementsByTagName("body")[0];var t=document.createElement("img");t.src=e;t.width=1;t.height=1;t.border=0;t.alt="";r.appendChild(t)}};this.frm=function(e){var t=document;var n=t.createElement("iframe");n.src=e;n.width=0;n.height=0;n.vspace=0;n.hspace=0;n.marginWidth=0;n.marginHeight=0;n.allowTransparency=true;n.scrolling="no";n.frameBorder=0;try{t.body.insertBefore(n,t.body.firstChild)}catch(r){t.write("<ifr"+"ame"+' src="'+e+'" width="0" height="0" frameborder="0" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true"></ifr'+"ame>")}};this.ckm=function(e){if(e.doCKM){var t=this.gcc();if(t==null||t==""){return}var c=document.cookie;var u=c.indexOf("accm_scm=1;")>-1?'accm_scm':this.scm();if(u!='accm_scm'){var n="ts="+this.tst();var n=this.prt+"//track.adclear.net/ckm/"+e.advertiserId+"/?ts="+this.tst()+"&ck="+t;this.img(n)}}};this.gcc=function(){var e=document.cookie.split(";");for(var t=0;t<e.length;++t){var n=e[t].split("=");if(n[0].replace(/^\s+|\s+$/g, '')=="acc"){return n[1].replace(/^\s+|\s+$/g, '')}}return null};this.scm=function(){var t=new Date();var d=t.getTime()+(1*24*60*60*1000);t.setTime(d);document.cookie="accm_scm=1; expires="+t.toGMTString();return null};this.vpr=function(e){var t="ts="+this.tst();if(e.mkwid){t+="&mkwid="+this.enc(e.mkwid)};if(e.pcrid){t+="&pcrid="+this.enc(e.pcrid)};if(e.kword){t+="&kword="+this.enc(e.kword)};if(e.match){t+="&match="+this.enc(e.match)};if(e.plid){t+="&plid="+this.enc(e.plid)};if(e.utm_source){t+="&utm_source="+this.enc(e.utm_source)};if(e.utm_medium){t+="&utm_medium="+this.enc(e.utm_medium)};if(e.utm_term){t+="&utm_term="+this.enc(e.utm_term)};if(e.utm_content){t+="&utm_content="+this.enc(e.utm_content)};if(e.utm_campaign){t+="&utm_campaign="+this.enc(e.utm_campaign)};if(e.oref){t+="&oref="+this.enc(e.oref)}else{var n=window.document.referrer;if(n){t+="&oref="+this.enc(n)}}t+="&navj=";t+=navigator.javaEnabled()?navigator.javaEnabled():"null";t+="&navc=";t+=navigator.cookieEnabled?navigator.cookieEnabled:"null";var r=screen.width?screen.width:"0";r+="x";r+=screen.height?screen.height:"0";r+="x";r+=screen.colorDepth?screen.colorDepth:"0";t+="&scrwhc="+r;return this.afp(e,t)};this.acv=function(e){var t=this.prt+"//"+e.trackDomain+"/acv/"+e.advertiserId+"/acv?"+this.vpr(e);this.img(t)};this.runACTag=function(){this.doACF=true;this.acv(this)};this.cpr=function(e){var t="ts="+this.tst();if(e.mkwid){t+="&mkwid="+this.enc(e.mkwid)};if(e.pcrid){t+="&pcrid="+this.enc(e.pcrid)};if(e.kword){t+="&kword="+this.enc(e.kword)};if(e.match){t+="&match="+this.enc(e.match)};if(e.plid){t+="&plid="+this.enc(e.plid)};if(e.utm_source){t+="&utm_source="+this.enc(e.utm_source)};if(e.utm_medium){t+="&utm_medium="+this.enc(e.utm_medium)};if(e.utm_term){t+="&utm_term="+this.enc(e.utm_term)};if(e.utm_content){t+="&utm_content="+this.enc(e.utm_content)};if(e.utm_campaign){t+="&utm_campaign="+this.enc(e.utm_campaign)};if(e.contentId){t+="&ci="+this.enc(e.contentId)}if(e.wtEverId){t+='&wteid='+this.enc(e.wtEverId)}if(e.wtRequestId){t+='&wtrqid='+this.enc(e.wtRequestId)}if(e.mediaTarget){t+="&mt="+this.enc(e.mediaTarget)}if(e.cref){t+="&cref="+this.enc(e.cref)}if(e.oref){t+="&oref="+this.enc(e.oref)}else{var n=window.document.referrer;if(n){t+="&oref="+this.enc(n)}}return this.afp(e,t)};this.acc=function(e){var t=this.prt+"//"+e.trackDomain+"/acv/"+e.advertiserId+"/acc?"+this.cpr(e);this.img(t);this.ckm(e)};this.afp=function(e,t){try{var n=new ACFP;t+=e.doACF?n.afp():""}catch(r){}return t};this.apr=function(e){var t="ts="+this.tst();t+="&cvt="+this.enc(e.conversionTarget);var n=e.conversionId?e.conversionId:e.conversionTarget+":"+this.tst();t+="&cvid="+this.enc(n);if(e.orderValue){t+="&ov="+this.enc(e.orderValue)}if(e.orderCurrency){t+="&oc="+this.enc(e.orderCurrency)}if(e.invoiceValue){t+="&iv="+this.enc(e.invoiceValue)}if(e.discountCode){t+="&dc="+this.enc(e.discountCode)}if(e.discountValue){t+="&dv="+this.enc(e.discountValue)}if(e.trackCategory){t+="&tc="+this.enc(e.trackCategory)}if(e.customerId){t+="&cuid="+this.enc(e.customerId)}if(e.explicitSegment){t+="&es="+this.enc(e.explicitSegment)}if(e.isCustomerNew){var r=e.isCustomerNew.toLowerCase();t+="&icn=";t+=r=="true"||r=="false"?r:"null"}if(e.basket){t+="&bk="+this.enc(e.basket)}if(e.contentId){t+="&ci="+this.enc(e.contentId)}if(e.passThrough){t+='&pt='+this.enc(e.passThrough)}if(e.wtEverId){t+='&wteid='+this.enc(e.wtEverId)}if(e.wtRequestId){t+='&wtrqid='+this.enc(e.wtRequestId)}return this.afp(e,t)};this.aca=function(e){var t=this.prt+"//"+e.trackDomain+"/acv/"+e.advertiserId+"/aca?mod=m&"+this.apr(e);this.img(t)}};
+var act_c=new ACTRP_CT();
+act_c.acc(adclearPITag);
+  
+        /* End Tag Sending Code */
+
+
+        /* Start Loader Callback Function */
+        /* Un-comment the single-line JavaScript comments ("//") to use this Loader callback function. */
+
+        u.loader_cb = function () {
+          u.initialized = true;
+          /* Start Loader Callback Tag Sending Code */
+
+			
+  			
+
+
+          /* End Loader Callback Tag Sending Code */
+        };
+
+        /* End Loader Callback Function */
+
+
+        /* Start Loader Function Call */
+        /* Un-comment the single-line JavaScript comments ("//") to use Loader. */
+          
+       /*   if (!u.initialized) {
+            u.loader({"type" : "iframe", "src" : u.data.base_url + c.join(u.data.qsp_delim), "cb" : u.loader_cb, "loc" : "body", "id" : 'utag_232' });
+            u.loader({"type" : "script", "src" : u.data.base_url, "cb" : u.loader_cb, "loc" : "script", "id" : 'utag_232' });
+          } else {
+            u.loader_cb();
+          }
+
+          u.loader({"type" : "img", "src" : u.data.base_url + c.join(u.data.qsp_delim) });
+*/
+        /* End Loader Function Call */
+
+
+        //##UTENABLEDEBUG##utag.DB("send:##UTID##:COMPLETE");
+      }
+    };
+    utag.o[loader].loader.LOAD(id);
+  })("232", "lineadirectaaseguradorasa.vvz");
+} catch (error) {
+  utag.DB(error);
+}
+//end tealium universal tag
+

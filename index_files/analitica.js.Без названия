@@ -1,0 +1,33 @@
+function getApp(){var plataforma='';var app='';try{plataforma=window.utag_data.platform;plataforma=plataforma.replace('/','');app=window.utag_data.app;app=app.replace('/','');}catch(error){app='tarificador';plataforma='escritorioPorDefecto';}
+return app+'_'+plataforma;}
+function getDomain(url){var dominio;dominio='vvz';return dominio;}
+function getProducto(){var producto='';try{producto=window.utag_data.product;producto=producto.replace('/','');}catch(error){producto='productoNoEspecificado';}
+return producto;}
+function registraErrorAnalitica(cual,texto){try{if(typeof s!="undefined"&&s.pageName){formatearErrorSC(cual,texto);}
+if(typeof utag_data!="undefined"){if(window.utag_data.event_label==null){window.utag_data.event_label='';}
+if(typeof _gaq!="undefined"&&typeof _gat!="undefined"){pagina=_gat.D[0].H;}
+sendEvent('Error',pagina,texto);}else{if(typeof _gaq!="undefined"&&typeof _gat!="undefined"){pagina=_gat.D[0].H;pagina_error='';if(typeof _gat.D[0].H!="undefined"&&_gat.D[0].H.indexOf('error_')<0){pagina_error=pagina.substr(0,pagina.lastIndexOf('/')+1);pagina_error+='error_';pagina_error+=pagina.substr(pagina.lastIndexOf('/')+1);_gaq.push(['_trackPageview',pagina_error]);}}}}catch(error){}}
+function formatearErrorSC(cual,texto){var NO_INFORMADO='_no informado';if(window.s!=null&&s.pageName){if(cual!=""){if(cual.indexOf("_rb")!=-1||cual.indexOf("_cx")!=-1){var tamCual=cual.length;cual=cual.substring(0,tamCual-3);}
+var encontrado=0;for(i=0;i<document.getElementsByTagName('input').length&&encontrado==0;i++){if(document.getElementsByTagName('input')[i].name==cual){encontrado=1;if(document.getElementsByTagName('input')[i].type=="radio"){if(!document.getElementsByTagName('input')[i].checked){texto+=NO_INFORMADO;}}
+else if(document.getElementsByTagName('input')[i].type=="checkbox"){if(!document.getElementsByTagName('input')[i].checked){texto+=NO_INFORMADO;}}
+else if(document.getElementsByTagName('input')[i].type=="text"||document.getElementsByTagName('input')[i].type=="password"||document.getElementsByTagName('input')[i].type=="hidden"){if(document.getElementsByTagName('input')[i].value==''){texto+=NO_INFORMADO;}}}}
+if(encontrado==0){var tipo=document.getElementById(cual).type;if(typeof(tipo)!="undefined"){if(tipo.indexOf("select")!=-1){if(!compruebaSelect(cual)){texto+=NO_INFORMADO;}
+else if(cual.indexOf('dia')!=-1){var prefijo=cual.substring(0,cual.indexOf('dia'));var mes=prefijo+'mes'+cual.slice(cual.indexOf('dia')+3,cual.length);var anyo=prefijo+'anyo'+cual.slice(cual.indexOf('dia')+3,cual.length);if((document.getElementById(cual).selectedIndex==0)||(document.getElementById(mes).selectedIndex==0)){texto+=NO_INFORMADO;}
+else if(document.getElementById(cual).value==''){texto+=NO_INFORMADO;}}}}}
+enviarErrorSC(texto);}
+else{enviarErrorSC(texto);}}}
+function enviarErrorSC(texto){if(window.s!=null&&s.pageName){var seccion='';if(s.channel){seccion=s.channel;}else{seccion=document.forms[0].id;}
+pagina=s.pageName;if(s.pageName.indexOf('error_')<0){s.pageName=pagina.substr(0,pagina.lastIndexOf('/')+1);s.pageName+='error_';s.pageName+=pagina.substr(s.pageName.lastIndexOf('/')+1);s.tl(true,'o');}
+s.eVar1="";s.sendFormEvent('e',s.pageName,seccion,'Error en campo:'+texto);}}
+function incluirTealium(){var scr=document.createElement("script");var url=document.URL;var ruta='//tags.tiqcdn.com/utag/lineadirectaaseguradorasa/';var dom=getDomain(url);ruta+=dom+'/';if(url.indexOf("localhost")!=-1||url.indexOf("desarrollo.lda")!=-1){ruta+='dev';}else if(url.indexOf("training.lda")!=-1){ruta+='qa';}else{ruta+='prod';}
+ruta+='/utag.js';scr.setAttribute("src",ruta);scr.setAttribute("type","text/javascript");document.body.appendChild(scr);}
+function sendEvent(category,action,label){try{if(typeof utag_data!="undefined"){_gaq.push(['_trackEvent',category,action,label]);}}catch(error){}}
+function sendEventAyuda(tipoAyuda){try{var label='';if(tipoAyuda.indexOf("C2C")!=-1){label='C2C';}else if(tipoAyuda.indexOf("CMB")!=-1){label='CALL ME BACK';}
+sendEvent(getApp(),getProducto(),label);}catch(error){}}
+function generarUtagData(nombrePagina){var url=document.URL;var dom='';dom='vvz';var producto='';producto='/salud';var pageName='';if(typeof nombrePagina=="undefined"||nombrePagina==''){var poshasta=url.indexOf("?");if(poshasta<1)
+{poshasta=url.length;}
+pageName='/'+url.substring(url.lastIndexOf("/")+1,poshasta);}else{pageName='/'+nombrePagina;}
+var jsonObject={domain:dom,platform:'/escritorio',app:'/estaticos',product:producto,page_name:pageName}
+return jsonObject;}
+function getCookie(name){var start=document.cookie.indexOf(name+'=');var len=start+name.length+1;if((!start)&&(name!=document.cookie.substring(0,name.length))){return null;}
+if(start==-1)return null;var end=document.cookie.indexOf(';',len);if(end==-1)end=document.cookie.length;return unescape(document.cookie.substring(len,end));}
